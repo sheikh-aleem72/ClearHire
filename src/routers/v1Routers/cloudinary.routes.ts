@@ -6,7 +6,7 @@ import { uploadMultipleMiddleware, uploadMultipleToCloudinary } from '../../scri
 const router = express.Router();
 
 // Route to get presigned url to upload resume to cloudinary
-router.get('/presigned-urls', authMiddleware, getPresignedUrls);
+router.post('/presigned-urls', authMiddleware, getPresignedUrls);
 
 // route to directly upload file to cloudinary (For testing)
 router.get('/upload', uploadMultipleMiddleware, uploadMultipleToCloudinary);

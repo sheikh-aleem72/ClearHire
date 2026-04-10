@@ -88,7 +88,6 @@ export const getJobResumes = async ({
   const isFailedFilter = filter.passFail === 'failed';
 
   if (passFail) {
-    console.log('passFail:', passFail);
     filter.passFail = passFail; // assumes stored by worker
   }
 
