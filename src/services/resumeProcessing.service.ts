@@ -200,7 +200,14 @@ export const resumeProcessingCallbackService = async (payload: ResumeProcessingC
   const processing = await ResumeProcessing.findById(resumeProcessingId);
 
   if (!processing) {
-    throw new AppError('ResumeProcessing not found', 404);
+    return { ignored: true };
+  }
+
+  // Check if job exists
+  const job = await JobModel.findById(processing.jobDescriptionId);
+
+  if (!job || job.status !== 'active') {
+    return; // IGNORE
   }
 
   // If already accounted → idempotent return

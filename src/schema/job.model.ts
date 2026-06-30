@@ -8,6 +8,7 @@ export interface IJob extends Document {
   preferred_skills?: string[]; // nice-to-have
   experience_level?: 'Junior' | 'Mid' | 'Senior' | 'Lead' | string;
   min_experience_years?: number;
+  status: 'active' | 'deleting' | 'deleted' | string;
   description?: string;
   createdBy?: Types.ObjectId; // recruiter id
   createdAt: Date;
@@ -28,6 +29,10 @@ const JobSchema = new Schema<IJob>(
     min_experience_years: { type: Number, default: 0 },
     description: { type: String, default: '' },
     createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
+    status: {
+      type: String,
+      default: 'active',
+    },
 
     // DENORMALIZED DASHBOARD FIELDS
     totalResumes: { type: Number, default: 0 },

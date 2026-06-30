@@ -7,8 +7,12 @@ import {
   updateJobById,
 } from '../repositories/job.repository';
 import { AppError } from '../utils/AppErrors';
+import { ResumeModel } from '../schema/resume.model';
+import { BatchModel } from '../schema/batch.model';
+import { ResumeAnalysisModel } from '../schema/resumeAnalysis.model';
 import { ResumeProcessing } from '../schema/resumeProcessings.model.';
 import mongoose from 'mongoose';
+import { publishRQDeleteJob } from '../queues/deletePublisher';
 
 interface GetJobResumesParams {
   jobId: string;
@@ -53,9 +57,31 @@ export const updateJobService = async (id: string, update: Partial<IJob>) => {
 };
 
 export const deleteJobService = async (id: string) => {
-  const deleted = await deleteJobById(id);
-  if (!deleted) throw new AppError('Job not found or delete failed', 404);
-  return deleted;
+  // ------------------------------
+  // STEP 1 — Validate job
+  // ------------------------------
+  const job = await JobModel.findById(id);
+
+  if (!job) {
+    throw new AppError('Job not found', 404);
+  }
+
+  // 2. Check if job is already being deleted
+  if (job.status === 'deleting') {
+    throw new AppError('Job is already being deleted', 400);
+  }
+
+  // 3. Mark job status="deleting"
+  job.status = 'deleting';
+  await job.save();
+
+  // Publish job for cleanup
+  await publishRQDeleteJob(id);
+
+  // Return accepted to the frontend
+  return {
+    message: 'Job deletion initiated',
+  };
 };
 
 export const getJobsByRecruiterService = async (recruiterId: string) => {
