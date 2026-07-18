@@ -185,7 +185,6 @@ export const requestOtpService = async (email: string, purpose: 'signup' | 'rese
   // Generate OTP and hashes
   const otp = generateOtp();
   const otpHash = await hashOtp(otp);
-  console.log(' OTP - ', otp);
 
   const expiresMinutes = Number(env.OTP_EXPIRES_MINUTES || 5);
   const otpExpiresAt = new Date(Date.now() + expiresMinutes * 60 * 1000);
