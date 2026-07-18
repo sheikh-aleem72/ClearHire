@@ -32,6 +32,7 @@ export const getJobsByRecruiter = async (id: string) => {
       completedResumes: 1,
       failedResumes: 1,
       updatedAt: 1,
+      status: 1,
     })
     .sort({ createdAt: -1 })
     .lean();

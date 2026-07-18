@@ -32,3 +32,60 @@ export const sendOtpEmail = async (to: string, otp: string, purpose: 'signup' | 
     html,
   });
 };
+
+export interface ContactEmailPayload {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export const sendContactEmail = async ({ name, email, subject, message }: ContactEmailPayload) => {
+  const text = `
+New Contact Message
+
+Name: ${name}
+Email: ${email}
+Subject: ${subject}
+
+-----------------------------------------
+
+${message}
+`;
+
+  const html = `
+    <h2>New Contact Message</h2>
+
+    <table cellpadding="6">
+      <tr>
+        <td><b>Name</b></td>
+        <td>${name}</td>
+      </tr>
+
+      <tr>
+        <td><b>Email</b></td>
+        <td>${email}</td>
+      </tr>
+
+      <tr>
+        <td><b>Subject</b></td>
+        <td>${subject}</td>
+      </tr>
+    </table>
+
+    <hr/>
+
+    <p style="white-space:pre-line">
+      ${message}
+    </p>
+  `;
+
+  await transporter.sendMail({
+    from: env.SMTP_USER,
+    to: env.CONTACT_RECEIVER_EMAIL,
+    replyTo: email,
+    subject: `[ClearHire Contact] ${subject}`,
+    text,
+    html,
+  });
+};

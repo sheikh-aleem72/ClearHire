@@ -93,7 +93,6 @@ export const updateJob = async (req: AuthRequest, res: Response) => {
 
 export const deleteJob = async (req: AuthRequest, res: Response) => {
   try {
-    console.log('Request received!');
     const jobDescriptionId = req.params.id;
     if (!jobDescriptionId) {
       return res.status(400).json({
@@ -102,8 +101,7 @@ export const deleteJob = async (req: AuthRequest, res: Response) => {
       });
     }
     await service.deleteJobService(jobDescriptionId);
-    console.log('Request Processed!');
-    return res.status(204).json({
+    return res.status(202).json({
       success: true,
       message: 'Job deletion initiated',
     });
