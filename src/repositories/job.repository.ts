@@ -8,19 +8,7 @@ export const createJob = async (payload: Partial<IJob>) => {
 
 export const findJobById = async (id: string, recruiterId: string) => {
   if (!Types.ObjectId.isValid(id)) return null;
-  return JobModel.findOne({ _id: id, createdBy: recruiterId })
-    .select({
-      title: 1,
-      description: 1,
-      required_skills: 1,
-      experience_level: 1,
-      min_experience_years: 1,
-      totalResumes: 1,
-      completedResumes: 1,
-      createdAt: 1,
-      updatedAt: 1,
-    })
-    .lean();
+  return JobModel.findOne({ _id: id, createdBy: recruiterId }).lean();
 };
 
 export const getJobsByRecruiter = async (id: string) => {
