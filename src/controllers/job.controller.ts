@@ -1,8 +1,6 @@
 import { Request as ExRequest, Response } from 'express';
 import * as service from '../services/job.service';
 import { AppError } from '../utils/AppErrors';
-import { success } from 'zod';
-import { updateResumeAnalysis } from '../repositories/analysis.repository';
 
 interface AuthRequest extends ExRequest {
   user?: {

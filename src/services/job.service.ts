@@ -1,15 +1,11 @@
 import { IJob, JobModel } from '../schema/job.model';
 import {
   createJob,
-  deleteJobById,
   findJobById,
   getJobsByRecruiter,
   updateJobById,
 } from '../repositories/job.repository';
 import { AppError } from '../utils/AppErrors';
-import { ResumeModel } from '../schema/resume.model';
-import { BatchModel } from '../schema/batch.model';
-import { ResumeAnalysisModel } from '../schema/resumeAnalysis.model';
 import { ResumeProcessing } from '../schema/resumeProcessings.model.';
 import mongoose from 'mongoose';
 import { publishRQDeleteJob } from '../queues/deletePublisher';
