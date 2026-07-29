@@ -151,7 +151,6 @@ export const getJobsByRecruiterController = async (req: AuthRequest, res: Respon
 
 export const getJobResumesController = async (req: AuthRequest, res: Response) => {
   try {
-    const recruiterId = req.user!.id;
     const { jobId } = req.params;
 
     const page = Number(req.query.page) || 1;
@@ -165,7 +164,6 @@ export const getJobResumesController = async (req: AuthRequest, res: Response) =
 
     const result = await service.getJobResumes({
       jobId,
-      recruiterId,
       page,
       limit,
       status,

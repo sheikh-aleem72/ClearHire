@@ -66,7 +66,7 @@ export const createBatchService = async (data: {
   );
 
   // 4. Build batch.resumes references
-  const batchResumes = resumeProcessing.map((rp, index) => ({
+  const batchResumes = resumeProcessing.map((rp) => ({
     resumeObjectId: rp.resumeObjectId,
     resumeUrl: rp.resumeUrl,
     resumeProcessingId: rp._id.toString(),
@@ -94,7 +94,7 @@ export const createBatchService = async (data: {
   await publishRQBatchJob({
     batchId,
     jobDescriptionId: jobDescriptionId,
-    resumes: resumeProcessing.map((rp, i) => ({
+    resumes: resumeProcessing.map((rp) => ({
       resumeProcessingId: rp._id.toString(), //  resumeProcessingId
       resumeUrl: rp.resumeUrl,
       externalResumeId: rp.externalResumeId,

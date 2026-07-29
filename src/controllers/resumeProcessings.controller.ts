@@ -8,7 +8,6 @@ import {
   resumeProcessingCallbackService,
   updateResumeProcessingsService,
 } from '../services/resumeProcessing.service';
-import { success } from 'zod';
 
 interface AuthRequest extends ExRequest {
   user?: {
