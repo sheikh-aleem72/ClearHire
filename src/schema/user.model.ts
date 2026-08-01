@@ -34,7 +34,7 @@ const userSchema: Schema<IUser> = new Schema(
 );
 
 // 3️⃣ Pre-save hook to hash password
-userSchema.pre<IUser>('save', async function (next) {
+userSchema.pre<IUser>('save', async function () {
   // isModified -> It does NOT look at whether the value was hashed, is hashed, was previously hashed, or looks different.
   // It only looks at:
   // Did we call .password = something before .save()?

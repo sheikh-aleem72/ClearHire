@@ -11,7 +11,6 @@ import {
 } from '../repositories/pendingVerification.repository';
 import { env } from '../config/serverConfig';
 import { generateOtp, hashOtp, verifyOtpHash } from '../utils/otp';
-import { hash as bcryptHash } from 'bcryptjs';
 
 export interface AuthResponse {
   accessToken: string;

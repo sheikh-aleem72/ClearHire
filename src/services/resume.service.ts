@@ -1,5 +1,5 @@
 import { saveResumeMetaData } from '../repositories/resume.repository';
-import { IResumeInput, ResumeModel } from '../schema/resume.model';
+import { ResumeModel } from '../schema/resume.model';
 import { AppError } from '../utils/AppErrors';
 
 interface ResumeInputType {

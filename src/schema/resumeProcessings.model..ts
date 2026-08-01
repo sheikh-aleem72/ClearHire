@@ -1,5 +1,4 @@
-import { Schema, model, Types } from 'mongoose';
-import { string } from 'zod';
+import { Schema, model, Types, InferSchemaType } from 'mongoose';
 
 export type ResumeProcessingStatus = 'queued' | 'processing' | 'completed' | 'failed';
 
@@ -20,17 +19,17 @@ const ResumeProcessingSchema = new Schema(
     },
 
     batchId: {
-      type: string,
+      type: String,
       required: true,
       index: true,
     },
 
     externalResumeId: {
-      type: string,
+      type: String,
     },
 
     resumeUrl: {
-      type: string,
+      type: String,
       required: true, // Denormalized for worker independence & retry safet
     },
 
@@ -257,3 +256,5 @@ ResumeProcessingSchema.index(
 );
 
 export const ResumeProcessing = model('ResumeProcessing', ResumeProcessingSchema);
+
+export type ResumeProcessingDocument = InferSchemaType<typeof ResumeProcessingSchema>;

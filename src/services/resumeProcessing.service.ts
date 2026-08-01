@@ -221,31 +221,24 @@ export const resumeProcessingCallbackService = async (payload: ResumeProcessingC
   }
 
   // 2. Prepare atomic batch update
-  const update: Record<string, any> = {
-    $inc: { processedResumes: 1 },
+  const update = {
+    $inc: {
+      processedResumes: 1,
+      ...(status === 'completed' ? { completedResumes: 1 } : {}),
+      ...(status === 'failed' ? { failedResumes: 1 } : {}),
+    },
   };
-
-  if (status === 'completed') {
-    update.$inc.completedResumes = 1;
-  } else if (status === 'failed') {
-    update.$inc.failedResumes = 1;
-  } else {
-    throw new AppError('Invalid status value', 400);
-  }
 
   // 3. Update Batch atomically
   const batch = await BatchModel.findOneAndUpdate({ batchId }, update, { new: true });
 
   // 4. Prepare atomic job update and update job
-  const jobUpdate: any = {
-    $inc: {},
+  const jobUpdate = {
+    $inc: {
+      ...(status === 'completed' ? { completedResumes: 1 } : {}),
+      ...(status === 'failed' ? { failedResumes: 1 } : {}),
+    },
   };
-
-  if (status === 'completed') {
-    jobUpdate.$inc.completedResumes = 1;
-  } else if (status === 'failed') {
-    jobUpdate.$inc.failedResumes = 1;
-  }
 
   await JobModel.updateOne({ _id: processing.jobDescriptionId }, jobUpdate);
 

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { sendContactMessageService } from '../services/contact.service';
 import { AppError } from '../utils/AppErrors';
 

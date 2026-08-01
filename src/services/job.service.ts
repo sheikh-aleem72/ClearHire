@@ -1,22 +1,17 @@
 import { IJob, JobModel } from '../schema/job.model';
 import {
   createJob,
-  deleteJobById,
   findJobById,
   getJobsByRecruiter,
   updateJobById,
 } from '../repositories/job.repository';
 import { AppError } from '../utils/AppErrors';
-import { ResumeModel } from '../schema/resume.model';
-import { BatchModel } from '../schema/batch.model';
-import { ResumeAnalysisModel } from '../schema/resumeAnalysis.model';
-import { ResumeProcessing } from '../schema/resumeProcessings.model.';
-import mongoose from 'mongoose';
+import { ResumeProcessing, ResumeProcessingDocument } from '../schema/resumeProcessings.model.';
+import mongoose, { FilterQuery, PipelineStage } from 'mongoose';
 import { publishRQDeleteJob } from '../queues/deletePublisher';
 
 interface GetJobResumesParams {
   jobId: string;
-  recruiterId: string;
   page: number;
   limit: number;
   status?: string | undefined;
@@ -90,7 +85,6 @@ export const getJobsByRecruiterService = async (recruiterId: string) => {
 
 export const getJobResumes = async ({
   jobId,
-  recruiterId,
   page,
   limit,
   status,
@@ -103,15 +97,13 @@ export const getJobResumes = async ({
   }
 
   // 2. Build filters
-  const filter: any = {
+  const filter: FilterQuery<ResumeProcessingDocument> = {
     jobDescriptionId: new mongoose.Types.ObjectId(jobId),
   };
 
   if (status) {
     filter.status = status;
   }
-
-  const isFailedFilter = filter.passFail === 'failed';
 
   if (passFail) {
     filter.passFail = passFail; // assumes stored by worker
@@ -120,7 +112,7 @@ export const getJobResumes = async ({
   // 3. Query resumes
   const matchStage = { $match: filter };
 
-  const pipeline: any[] = [matchStage];
+  const pipeline: PipelineStage[] = [matchStage];
 
   if (filter.passFail === 'failed') {
     pipeline.push({
@@ -188,7 +180,7 @@ export const getJobUpdates = async ({ jobId, recruiterId, since }: GetJobUpdates
   }
 
   // 2️⃣ Build filter
-  const filter: any = {
+  const filter: FilterQuery<ResumeProcessingDocument> = {
     jobDescriptionId: jobId,
   };
 

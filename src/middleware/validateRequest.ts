@@ -10,7 +10,7 @@ export const validateRequest =
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        // 👇 safely typed, TS and ESLint both happy
+        // safely typed, TS and ESLint both happy
         const firstError = (error as ZodError).issues[0]?.message || 'Validation failed';
 
         return res.status(400).json({
