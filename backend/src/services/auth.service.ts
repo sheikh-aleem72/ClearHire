@@ -140,7 +140,7 @@ export const refreshTokenService = async (refreshToken: string): Promise<Refresh
 export const resetPasswordService = async (email: string) => {
   // Check if user exists
   const user = await findUserByEmail(email);
-  if (!user) throw new AppError('Invalid email or password', 401);
+  if (!user) throw new AppError('No account found with this email', 401);
 
   // Generate OTP
   const { otp, otpExpiresAt, otpHash } = await requestOtpService(email, 'reset');
