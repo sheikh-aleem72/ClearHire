@@ -9,6 +9,7 @@ export default function NewUploadPage() {
   const { jobId } = useParams();
 
   const { mutateAsync: createBatch } = useCreateBatch();
+  const [isCreatingBatch, setIsCreatingBatch] = useState<boolean>(false);
 
   const [uploadedResumes, setUploadedResumes] = useState<
     { resumeObjectId: string; resumeUrl: string }[]
@@ -20,6 +21,8 @@ export default function NewUploadPage() {
 
   const handleCreateBatch = useCallback(async () => {
     if (!jobId || !hasUploadedResumes) return;
+
+    setIsCreatingBatch(true);
 
     await createBatch({
       jobDescriptionId: jobId,
@@ -203,6 +206,7 @@ export default function NewUploadPage() {
               <ResumeUploader
                 onUploadComplete={handleUploadComplete}
                 onCreateBatch={handleCreateBatch}
+                isCreatingBatch={isCreatingBatch}
               />
             </div>
           </div>
