@@ -1,16 +1,33 @@
-FROM node:20-alpine
+# -----------------------------
+# Stage 1: Build
+# -----------------------------
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Install only prod dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --only=production
+COPY package*.json ./
 
-# Copy source
+RUN npm ci
+
 COPY . .
 
-# Build TS → JS
 RUN npm run build
+
+
+# -----------------------------
+# Stage 2: Production
+# -----------------------------
+FROM node:22-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY package*.json ./
+
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 5000
 

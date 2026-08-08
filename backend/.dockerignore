@@ -1,4 +1,22 @@
-node_modules;
-dist.git.env;
-npm - debug.log;
-Dockerfile;
+node_modules
+dist
+coverage
+
+.git
+.gitignore
+
+.env*
+!.env.example
+
+npm-debug.log
+
+Dockerfile
+docker-compose*
+
+.vscode
+.idea
+
+uploads
+
+README.md
+API-Contract.md
