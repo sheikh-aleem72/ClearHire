@@ -57,7 +57,7 @@ export const JobHero = ({
           <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-text-secondary">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-action-primary" />
-              <span>{location || "Remote"}</span>
+              <span>{location}</span>
             </div>
 
             <div className="flex items-center gap-2">

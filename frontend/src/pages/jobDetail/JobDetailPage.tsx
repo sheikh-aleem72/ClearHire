@@ -83,7 +83,7 @@ export const JobDetailPage = () => {
   const totalPages = Math.ceil(totalCandidates / ITEMS_PER_PAGE);
 
   const isComplete =
-    data.totalResumes > 0 && data.completedResumes === data.totalResumes;
+    data.totalResumes > 0 && data.completedResumes === data.totalResumes && data.totalResumes === data.completedResumes + data.failedResumes;
 
   const canUpload = isComplete || data.totalResumes === 0;
 

@@ -145,7 +145,7 @@ export const ResumeTable = ({ resumes }: Props) => {
 
                   {/* ---------------- Evaluation ---------------- */}
 
-                  <td className="px-6 py-5 align-top">
+                  <td className="px-6 py-5 align-center">
                     {" "}
                     {r.passFail === "failed" && reasons.length > 0 ? (
                       <div className="flex flex-col gap-2">
@@ -173,6 +173,19 @@ export const ResumeTable = ({ resumes }: Props) => {
                           </span>
                         ))}
                       </div>
+                    ) : r.passFail === "passed" ? (
+                      <p className="
+                               font-medium  border
+                              border-border-default
+                              bg-green-500/5
+                              px-3
+                              py-2
+                              text-xs
+                              leading-relaxed
+                              rounded-lg
+                              text-text-primary">
+                        Resume passed initial screening.
+                      </p>
                     ) : (
                       <span className="text-text-muted">
                         Resume is currently being processed...
