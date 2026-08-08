@@ -16,7 +16,7 @@ export const PipelineProgress = ({
       ? 0
       : Math.round((completedResumes / totalResumes) * 100);
 
-  const isComplete = totalResumes > 0 && completedResumes === totalResumes;
+  const isComplete = totalResumes > 0 && completedResumes + failedResumes === totalResumes;
 
   return (
     <section className="space-y-6">
@@ -90,7 +90,7 @@ export const PipelineProgress = ({
         <div>
           <div className="mb-3 flex items-center justify-between">
             <p className="text-sm font-medium text-text-primary">
-              {completedResumes} / {totalResumes} resumes processed
+              {completedResumes + failedResumes} / {totalResumes} resumes processed
             </p>
 
             <div className="inline-flex items-center gap-2 text-sm text-text-secondary">
