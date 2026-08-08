@@ -43,7 +43,7 @@ export const env: EnvConfig = {
   JWT_ACCESS_EXPIRES_IN: getEnvVar('JWT_ACCESS_EXPIRES_IN'),
   SMTP_HOST: getEnvVar('SMTP_HOST'),
   SMTP_PORT: Number(getEnvVar('SMTP_PORT')),
-  SMTP_SECURE: Boolean(getEnvVar('SMTP_SECURE')),
+  SMTP_SECURE: getEnvVar("SMTP_SECURE") === "true",
   SMTP_USER: getEnvVar('SMTP_USER'),
   SMTP_PASS: getEnvVar('SMTP_PASS'),
   OTP_EXPIRES_MINUTES: Number(getEnvVar('OTP_EXPIRES_MINUTES')),
