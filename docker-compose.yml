@@ -1,0 +1,76 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: clearhire-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: clearhire-backend
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    ports:
+      - "5000:5000"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  batch-worker:
+    image: clearhire-worker:locked
+    container_name: clearhire-batch-worker
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: ["python", "-m", "app.queues.start_batch_workers"]
+    depends_on:
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+
+  analysis-worker:
+    image: clearhire-worker:locked
+    container_name: clearhire-analysis-worker
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: ["python", "-m", "app.queues.start_analysis_worker"]
+    depends_on:
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+
+  delete-worker:
+    image: clearhire-worker:locked
+    container_name: clearhire-delete-worker
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: ["python", "-m", "app.queues.start_delete_worker"]
+    depends_on:
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+
+  retry-scheduler:
+    image: clearhire-worker:locked
+    container_name: clearhire-retry-scheduler
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: ["python", "-m", "app.queues.scheduler"]
+    depends_on:
+      redis:
+        condition: service_healthy

@@ -42,7 +42,6 @@ userSchema.pre<IUser>('save', async function () {
   // If password WAS modified → hash it
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  console.log('Password is hashed! ', this.password);
 });
 
 // 4️⃣ Method to compare password during login

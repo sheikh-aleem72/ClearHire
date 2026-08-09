@@ -5,7 +5,8 @@ coverage
 .git
 .gitignore
 
-.env*
+.env
+.env.*
 !.env.example
 
 npm-debug.log

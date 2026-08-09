@@ -229,7 +229,7 @@ export const verifyOtpService = async ({
       role: 'recruiter',
     } as IUser);
 
-    console.log('Checkpoint3 -> Password after user created: ', newUser.password);
+    // console.log('Checkpoint3 -> Password after user created: ', newUser.password);
 
     await deletePendingByEmailAndPurpose(email, 'signup');
 
