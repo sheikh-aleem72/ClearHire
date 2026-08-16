@@ -1,8 +1,7 @@
-import { Brain, LoaderCircle } from "lucide-react";
-
 import { PageBackButton } from "../../shared/components/PageBackButton";
 import { ResumeHero } from "./ResumeHero";
 import { ResumeViewer } from "./ResumeViewer";
+import { DemoNotice } from "../../shared/components/DemoNotice";
 
 interface ResumeProcessingProps {
   resumeUrl: string;
@@ -46,44 +45,11 @@ export const ResumeProcessing = ({
         finalScore={finalScore}
       />
 
-      <section className="rounded-3xl border border-border-default bg-bg-secondary p-10">
-        <div className="flex items-start gap-5">
-          <div className="rounded-2xl bg-action-primary/10 p-4">
-            <LoaderCircle className="h-8 w-8 animate-spin text-action-primary" />
-          </div>
-
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold text-text-primary">
-              Resume is being processed
-            </h2>
-
-            <p className="mt-3 max-w-2xl leading-8 text-text-secondary">
-              ClearHire is currently parsing the resume, extracting candidate
-              information, calculating the ranking score, and preparing the AI
-              evaluation.
-            </p>
-
-            {/* Progress */}
-
-            <div className="mt-8 h-3 overflow-hidden rounded-full bg-bg-primary">
-              <div
-                className="
-                  h-full
-                  w-1/2
-                  animate-pulse
-                  rounded-full
-                  bg-action-primary
-                "
-              />
-            </div>
-
-            <div className="mt-5 flex items-center gap-3 text-sm text-text-secondary">
-              <Brain className="h-4 w-4 text-action-primary" />
-              This page updates automatically every 5 seconds.
-            </div>
-          </div>
-        </div>
-      </section>
+      <DemoNotice title="AI screening is unavailable in Demo Mode.">
+        This resume was successfully uploaded and stored. Text extraction,
+        ranking, and AI evaluation require background worker infrastructure
+        that is not currently deployed in the public demo.
+      </DemoNotice>
 
       <ResumeViewer resumeUrl={resumeUrl} />
     </div>

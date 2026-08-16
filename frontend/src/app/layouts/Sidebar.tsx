@@ -1,3 +1,4 @@
+import { Info } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logoIcon from "../../assets/logo.png";
 import { tokenUtils } from "../../features/auth/utils/tokenUtils";
@@ -173,6 +174,18 @@ export default function Sidebar() {
       {/* ------------------------------------------------------------------ */}
 
       <div className="shrink-0 border-t border-border px-3 py-3">
+        <NavLink
+          to="/demo-status"
+          className="mb-3 block rounded-xl border border-state-info/20 bg-state-info/10 px-3 py-3 transition-colors hover:bg-state-info/15"
+        >
+          <div className="flex items-center gap-2">
+            <Info className="h-4 w-4 text-state-info" />
+            <span className="text-sm font-semibold text-text-primary">Demo Mode</span>
+          </div>
+          <p className="mt-1 text-xs leading-5 text-text-secondary">
+            Some processing features are unavailable. Learn more →
+          </p>
+        </NavLink>
         <div className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-muted/50 transition-colors group">
           {/* Avatar initials circle */}
           <div className="w-8 h-8 rounded-full bg-action-primary/15 flex items-center justify-center shrink-0">

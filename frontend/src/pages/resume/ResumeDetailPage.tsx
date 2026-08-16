@@ -1,15 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useResumeProcessing } from "../../features/resume/hooks/useResumeProcessing";
-import { useRunDeepAnalysis } from "../../features/resume/hooks/useRunDeepAnalysis";
 import { ResumeLoading } from "../../features/resume/components/ResumeLoading";
 import { ResumeError } from "../../features/resume/components/ResumeError";
 import { ResumeProcessing } from "../../features/resume/components/ResumeProcessing";
 import { PageBackButton } from "../../features/shared/components/PageBackButton";
 import { ResumeHero } from "../../features/resume/components/ResumeHero";
-import { CandidateOverview } from "../../features/resume/components/CandidateOverview";
-import { AiEvaluation } from "../../features/resume/components/AiEvaluation";
 import { DeepAnalysis } from "../../features/resume/components/DeepAnalysis";
 import { ResumeViewer } from "../../features/resume/components/ResumeViewer";
+import { DemoNotice } from "../../features/shared/components/DemoNotice";
 
 export const ResumeDetailPage = () => {
   const { resumeId } = useParams();
@@ -17,8 +15,6 @@ export const ResumeDetailPage = () => {
   const { data, isLoading, isError, error, refetch } = useResumeProcessing(
     resumeId!
   );
-
-  const deepAnalysisMutation = useRunDeepAnalysis(resumeId!);
 
   /* ---------------- Loading ---------------- */
 
@@ -83,21 +79,19 @@ export const ResumeDetailPage = () => {
         updatedAt={data.updatedAt}
       />
 
-      <CandidateOverview
-        status={data.status}
-        analysisStatus={data.analysisStatus}
-        rank={data.rank}
-        passFail={data.passFail}
-      />
-
-      <AiEvaluation processing={false} explanation={data.explanation} />
+      <DemoNotice title="AI screening is unavailable in Demo Mode.">
+        This resume was successfully uploaded and stored. Resume processing
+        requires background worker infrastructure that is not currently deployed
+        in the public demo.
+      </DemoNotice>
 
       <DeepAnalysis
         analysis={data.analysis}
         analysisStatus={data.analysisStatus}
         analysisCompletedAt={data.updatedAt}
-        onRunAnalysis={() => deepAnalysisMutation.mutate()}
-        isRunning={deepAnalysisMutation.isPending}
+        onRunAnalysis={() => undefined}
+        isRunning={false}
+        isDemoMode
       />
 
       <ResumeViewer resumeUrl={data.resumeUrl} />

@@ -6,6 +6,7 @@ import { JobsStats } from "../../features/jobs/components/JobsStats";
 // import { JobsToolbar } from "../../features/jobs/components/JobsToolbar";
 import { JobTable } from "../../features/jobs/components/JobTable";
 import { useJobs } from "../../features/job-detail/hooks/useJobs";
+import { DemoNotice } from "../../features/shared/components/DemoNotice";
 
 export const JobsPage = () => {
   const { data, isLoading, isError, refetch } = useJobs();
@@ -36,6 +37,11 @@ export const JobsPage = () => {
       <JobsStats jobs={jobs} />
 
       {/* <JobsToolbar /> */}
+
+      <DemoNotice title="Job deletion is unavailable in Demo Mode.">
+        Job cleanup depends on ClearHire&apos;s background worker infrastructure,
+        which is intentionally not deployed in the public demo.
+      </DemoNotice>
 
       <JobTable jobs={jobs} />
     </div>

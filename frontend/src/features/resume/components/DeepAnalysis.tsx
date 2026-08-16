@@ -14,6 +14,7 @@ interface DeepAnalysisProps {
   analysisCompletedAt?: string;
   onRunAnalysis: () => void;
   isRunning: boolean;
+  isDemoMode?: boolean;
 }
 
 const AnalysisList = ({
@@ -76,6 +77,7 @@ export const DeepAnalysis = ({
   analysisCompletedAt,
   onRunAnalysis,
   isRunning,
+  isDemoMode = false,
 }: DeepAnalysisProps) => {
   if (analysisStatus !== "completed" || !analysis) {
     return (
@@ -107,8 +109,15 @@ export const DeepAnalysis = ({
           </p>
 
           <button
-            onClick={onRunAnalysis}
-            disabled={isRunning}
+            onClick={() => {
+              if (!isDemoMode) onRunAnalysis();
+            }}
+            disabled={isRunning || isDemoMode}
+            title={
+              isDemoMode
+                ? "Deep analysis requires the background worker infrastructure, which is unavailable in Demo Mode."
+                : undefined
+            }
             className="
               mt-8
               inline-flex
@@ -128,6 +137,12 @@ export const DeepAnalysis = ({
           >
             {isRunning ? "Starting Analysis..." : "Run Deep Analysis"}
           </button>
+          {isDemoMode && (
+            <p className="mt-4 text-sm text-text-secondary">
+              Deep analysis requires the background worker and AI processing
+              infrastructure, which is unavailable in Demo Mode.
+            </p>
+          )}
         </div>
       </section>
     );

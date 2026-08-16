@@ -2,7 +2,6 @@ import { Trash2, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import type { Job } from "../api";
-import { useDeleteMutation } from "../hooks/useDeleteJob";
 import { StatusBadge } from "./StatusBadge";
 import { formatRelativeTime } from "../../../utils/formatRelativeTime";
 
@@ -12,7 +11,6 @@ interface Props {
 
 export const JobTable = ({ jobs }: Props) => {
   const navigate = useNavigate();
-  const deleteMutation = useDeleteMutation();
 
   if (jobs.length === 0) {
     return (
@@ -27,12 +25,6 @@ export const JobTable = ({ jobs }: Props) => {
       </div>
     );
   }
-
-  const handleDelete = (jobId: string) => {
-    if (!window.confirm("Delete this hiring pipeline?")) return;
-
-    deleteMutation.mutate(jobId);
-  };
 
   return (
     <section className="space-y-6">
@@ -225,17 +217,15 @@ export const JobTable = ({ jobs }: Props) => {
                         </button>
 
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(job._id);
-                          }}
-                          disabled={deleting}
+                          disabled
+                          title="Job deletion requires the background worker infrastructure, which is unavailable in Demo Mode."
                           className="
                             rounded-xl
                             p-2
                             text-red-400
                             transition
                             hover:bg-red-500/10
+                            disabled:cursor-not-allowed
                             disabled:opacity-40
                           "
                         >

@@ -16,6 +16,7 @@ import JobCreatePage from "../../pages/jobs/JobCreatePage";
 import MarketingHomePage from "../../pages/marketing/MarketingHomePage";
 import { GuidePage } from "../../pages/guide/GuidePage";
 import { ContactPage } from "../../pages/contact/ContactPage";
+import { DemoStatusPage } from "../../pages/demo/DemoStatusPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MarketingHomePage /> },
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
           { path: "/home", element: <HomePage /> },
           { path: "/guide", element: <GuidePage /> },
           { path: "/contact", element: <ContactPage /> },
+          { path: "/demo-status", element: <DemoStatusPage /> },
           { path: "/jobs", element: <JobsPage /> },
           { path: "/jobs/:jobId", element: <JobDetailPage /> },
           { path: "/jobs/new", element: <JobCreatePage /> },

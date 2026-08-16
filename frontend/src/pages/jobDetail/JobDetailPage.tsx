@@ -4,7 +4,6 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useJob } from "../../features/job-detail/hooks/useJob";
 import { useJobResumes } from "../../features/job-detail/hooks/useJobResumes";
 import { useJobUpdates } from "../../features/job-detail/hooks/useJobUpdates";
-import { useDeleteMutation } from "../../features/jobs/hooks/useDeleteJob";
 
 import { JobHero } from "../../features/job-detail/components/JobHero";
 import { JobDetailsCard } from "../../features/job-detail/components/JobDetailsCard";
@@ -16,6 +15,7 @@ import { EmptyCandidates } from "../../features/job-detail/components/EmptyCandi
 import { JobLoading } from "../../features/job-detail/components/JobsLoading";
 import { JobStats } from "../../features/job-detail/components/JobsStats";
 import { PageBackButton } from "../../features/shared/components/PageBackButton";
+import { DemoNotice } from "../../features/shared/components/DemoNotice";
 
 export const JobDetailPage = () => {
   const ITEMS_PER_PAGE = 20;
@@ -24,8 +24,6 @@ export const JobDetailPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const deleteMutation = useDeleteMutation();
 
   const passFailParam = searchParams.get("passFail");
 
@@ -85,23 +83,7 @@ export const JobDetailPage = () => {
   const isComplete =
     data.totalResumes > 0 && data.completedResumes === data.totalResumes && data.totalResumes === data.completedResumes + data.failedResumes;
 
-  const canUpload = isComplete || data.totalResumes === 0;
-
-  //----------------------------------------------------
-  // Delete Job
-  //----------------------------------------------------
-
-  const handleDelete = () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this job?"
-    );
-
-    if (!confirmed) return;
-
-    deleteMutation.mutate(jobId!, {
-      onSuccess: () => navigate("/jobs"),
-    });
-  };
+  const canUpload = true;
 
   //----------------------------------------------------
   // Render
@@ -143,6 +125,11 @@ export const JobDetailPage = () => {
         totalResumes={data.totalResumes}
         failedResumes={data.failedResumes}
       />
+      <DemoNotice title="Resume processing is unavailable in Demo Mode.">
+        You can continue uploading resumes and they will be stored securely.
+        Background AI processing requires worker infrastructure that is not
+        currently deployed in the public demo.
+      </DemoNotice>
       <section className="space-y-6">
         <CandidateToolbar
           totalCandidates={totalCandidates}
@@ -260,8 +247,8 @@ export const JobDetailPage = () => {
           </div>
 
           <button
-            onClick={handleDelete}
-            disabled={deleteMutation.isPending}
+            disabled
+            title="Job deletion requires the background worker infrastructure, which is unavailable in Demo Mode."
             className="
               inline-flex
               h-12
@@ -280,7 +267,7 @@ export const JobDetailPage = () => {
               disabled:opacity-50
             "
           >
-            {deleteMutation.isPending ? "Deleting..." : "Delete Job"}
+            Delete Job
           </button>
         </div>
       </section>
