@@ -1,4 +1,4 @@
-import { publishAnalysisJob } from '../queues/analysisQueue';
+// import { publishAnalysisJob } from '../queues/analysisQueue';
 import { BatchModel } from '../schema/batch.model';
 import { JobModel } from '../schema/job.model';
 import { ResumeProcessing } from '../schema/resumeProcessings.model.';
@@ -60,9 +60,9 @@ export const analyzeResumeService = async ({ resumeProcessingId, force }: Analyz
   await rp.save();
 
   // enqueue job
-  await publishAnalysisJob({
-    resumeProcessingId: rp._id.toString(),
-  });
+  // await publishAnalysisJob({
+  //   resumeProcessingId: rp._id.toString(),
+  // });
 
   return {
     status: 'queued',

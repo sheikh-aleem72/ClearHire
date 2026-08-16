@@ -8,7 +8,7 @@ import {
 import { AppError } from '../utils/AppErrors';
 import { ResumeProcessing, ResumeProcessingDocument } from '../schema/resumeProcessings.model.';
 import mongoose, { FilterQuery, PipelineStage } from 'mongoose';
-import { publishRQDeleteJob } from '../queues/deletePublisher';
+// import { publishRQDeleteJob } from '../queues/deletePublisher';
 
 interface GetJobResumesParams {
   jobId: string;
@@ -71,7 +71,7 @@ export const deleteJobService = async (id: string) => {
   await job.save();
 
   // Publish job for cleanup
-  await publishRQDeleteJob(id);
+  // await publishRQDeleteJob(id);
 
   // Return accepted to the frontend
   return {

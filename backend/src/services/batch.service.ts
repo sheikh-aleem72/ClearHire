@@ -1,4 +1,4 @@
-import { publishRQBatchJob } from '../queues/rqPublisher';
+// import { publishRQBatchJob } from '../queues/rqPublisher';
 import { createBatch, getBatchById } from '../repositories/batch.repository';
 import { BatchModel, IBatch } from '../schema/batch.model';
 import { AppError } from '../utils/AppErrors';
@@ -91,15 +91,15 @@ export const createBatchService = async (data: {
   );
 
   // 7. Publish jobs (IMPORTANT CHANGE)
-  await publishRQBatchJob({
-    batchId,
-    jobDescriptionId: jobDescriptionId,
-    resumes: resumeProcessing.map((rp) => ({
-      resumeProcessingId: rp._id.toString(), //  resumeProcessingId
-      resumeUrl: rp.resumeUrl,
-      externalResumeId: rp.externalResumeId,
-    })),
-  });
+  // await publishRQBatchJob({
+  //   batchId,
+  //   jobDescriptionId: jobDescriptionId,
+  //   resumes: resumeProcessing.map((rp) => ({
+  //     resumeProcessingId: rp._id.toString(), //  resumeProcessingId
+  //     resumeUrl: rp.resumeUrl,
+  //     externalResumeId: rp.externalResumeId,
+  //   })),
+  // });
 
   console.log('Batch published!');
 
