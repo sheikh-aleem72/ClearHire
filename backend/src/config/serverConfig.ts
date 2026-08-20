@@ -26,6 +26,8 @@ interface EnvConfig {
   MAX_TOTAL_BYTES_PER_BATCH: number;
   DELETE_QUEUE_NAME: string;
   CONTACT_RECEIVER_EMAIL: string;
+  RESEND_API_KEY: string;
+  RESEND_FROM_EMAIL: string;
 }
 
 const getEnvVar = (key: string): string => {
@@ -56,4 +58,6 @@ export const env: EnvConfig = {
   MAX_TOTAL_BYTES_PER_BATCH: 200 * 1024 * 1024,
   DELETE_QUEUE_NAME: getEnvVar('DELETE_QUEUE_NAME'),
   CONTACT_RECEIVER_EMAIL: getEnvVar('CONTACT_RECEIVER_EMAIL'),
+  RESEND_API_KEY: getEnvVar('RESEND_API_KEY'),
+  RESEND_FROM_EMAIL: getEnvVar('RESEND_FROM_EMAIL'),
 };
