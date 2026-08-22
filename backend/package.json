@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "commonjs",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -34,7 +37,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.3",
     "multer": "^2.0.2",
-    "nodemailer": "^9.0.3",
+    "resend": "^6.22.0",
     "ts-node-dev": "^2.0.0",
     "uuid": "^13.0.0",
     "zod": "^4.1.11"

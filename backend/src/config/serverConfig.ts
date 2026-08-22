@@ -11,11 +11,6 @@ interface EnvConfig {
   JWT_REFRESH_SECRET: string;
   JWT_ACCESS_EXPIRES_IN: string;
   JWT_REFRESH_EXPIRES_IN: string;
-  SMTP_HOST: string;
-  SMTP_PORT: number;
-  SMTP_SECURE: boolean;
-  SMTP_USER: string;
-  SMTP_PASS: string;
   OTP_EXPIRES_MINUTES: number;
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_SECRET: string;
@@ -26,6 +21,8 @@ interface EnvConfig {
   MAX_TOTAL_BYTES_PER_BATCH: number;
   DELETE_QUEUE_NAME: string;
   CONTACT_RECEIVER_EMAIL: string;
+  RESEND_API_KEY: string;
+  RESEND_FROM_EMAIL: string;
 }
 
 const getEnvVar = (key: string): string => {
@@ -41,11 +38,6 @@ export const env: EnvConfig = {
   JWT_REFRESH_SECRET: getEnvVar('JWT_REFRESH_SECRET'),
   JWT_REFRESH_EXPIRES_IN: getEnvVar('JWT_REFRESH_EXPIRES_IN'),
   JWT_ACCESS_EXPIRES_IN: getEnvVar('JWT_ACCESS_EXPIRES_IN'),
-  SMTP_HOST: getEnvVar('SMTP_HOST'),
-  SMTP_PORT: Number(getEnvVar('SMTP_PORT')),
-  SMTP_SECURE: getEnvVar("SMTP_SECURE") === "true",
-  SMTP_USER: getEnvVar('SMTP_USER'),
-  SMTP_PASS: getEnvVar('SMTP_PASS'),
   OTP_EXPIRES_MINUTES: Number(getEnvVar('OTP_EXPIRES_MINUTES')),
   CLOUDINARY_API_KEY: getEnvVar('CLOUDINARY_API_KEY'),
   CLOUDINARY_API_SECRET: getEnvVar('CLOUDINARY_API_SECRET'),
@@ -56,4 +48,6 @@ export const env: EnvConfig = {
   MAX_TOTAL_BYTES_PER_BATCH: 200 * 1024 * 1024,
   DELETE_QUEUE_NAME: getEnvVar('DELETE_QUEUE_NAME'),
   CONTACT_RECEIVER_EMAIL: getEnvVar('CONTACT_RECEIVER_EMAIL'),
+  RESEND_API_KEY: getEnvVar('RESEND_API_KEY'),
+  RESEND_FROM_EMAIL: getEnvVar('RESEND_FROM_EMAIL'),
 };
